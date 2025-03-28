@@ -1,7 +1,7 @@
+import { StorageHandler } from "module_builder/StorageHandler";
 import { CommandHandler } from "./CommandHandler";
 import { helpFunction } from "./commands/Help";
 import { DebugConsoleProcess } from "./DebugConsoleProcess";
-import { StorageHandler } from "./module_builder/StorageHandler";
 import { exec } from "child_process"
 
 export type CommandCallback = (args: string[]) => void;

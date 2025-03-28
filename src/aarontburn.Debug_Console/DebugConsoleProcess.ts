@@ -1,10 +1,10 @@
 import * as path from "path";
-import { Process } from "./module_builder/Process";
-import { IPCCallback, IPCSource } from "./module_builder/IPCObjects";
-import { Setting } from "./module_builder/Setting";
 import { CommandHandler } from "./CommandHandler";
-import { BooleanSetting } from "./module_builder/settings/types/BooleanSetting";
 import { ICommand } from "./Commands";
+import { Process } from "module_builder/Process"
+import { IPCCallback, IPCSource } from "module_builder/IPCObjects";
+import { BooleanSetting } from "module_builder/settings/types/BooleanSetting";
+import { Setting } from "module_builder/Setting";
 
 
 export class DebugConsoleProcess extends Process {

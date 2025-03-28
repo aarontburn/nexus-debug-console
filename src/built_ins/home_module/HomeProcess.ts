@@ -1,9 +1,9 @@
+import { IPCCallback } from "module_builder/dist/IPCObjects";
+import { Process } from "module_builder/dist/Process";
+import { Setting } from "module_builder/dist/Setting";
+import { NumberSetting } from "module_builder/dist/settings/types/NumberSetting";
+import { StringSetting } from "module_builder/dist/settings/types/StringSetting";
 import * as path from "path";
-import { Process } from "../../aarontburn.Debug_Console/module_builder/Process";
-import { IPCCallback } from "../../aarontburn.Debug_Console/module_builder/IPCObjects";
-import { Setting } from "../../aarontburn.Debug_Console/module_builder/Setting";
-import { NumberSetting } from "../../aarontburn.Debug_Console/module_builder/settings/types/NumberSetting";
-import { StringSetting } from "../../aarontburn.Debug_Console/module_builder/settings/types/StringSetting";
 
 
 

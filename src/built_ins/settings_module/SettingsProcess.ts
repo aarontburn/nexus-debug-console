@@ -2,16 +2,15 @@ import * as path from "path";
 import * as fs from 'fs';
 import { BrowserWindow, OpenDialogOptions, app, dialog, shell } from 'electron';
 import { ModuleCompiler } from "../../ModuleCompiler";
-import { IPCCallback, IPCSource } from "../../aarontburn.Debug_Console/module_builder/IPCObjects";
-import { ModuleSettings } from "../../aarontburn.Debug_Console/module_builder/ModuleSettings";
-import { Process, ModuleInfo } from "../../aarontburn.Debug_Console/module_builder/Process";
-import { Setting } from "../../aarontburn.Debug_Console/module_builder/Setting";
-import { SettingBox, InputElement, ChangeEvent } from "../../aarontburn.Debug_Console/module_builder/SettingBox";
-import { BooleanSetting } from "../../aarontburn.Debug_Console/module_builder/settings/types/BooleanSetting";
-import { HexColorSetting } from "../../aarontburn.Debug_Console/module_builder/settings/types/HexColorSetting";
-import { NumberSetting } from "../../aarontburn.Debug_Console/module_builder/settings/types/NumberSetting";
-import { StorageHandler } from "../../aarontburn.Debug_Console/module_builder/StorageHandler";
-
+import { ModuleInfo, Process } from "module_builder/dist/Process";
+import { NumberSetting } from "module_builder/dist/settings/types/NumberSetting";
+import { HexColorSetting } from "module_builder/dist/settings/types/HexColorSetting";
+import { IPCCallback, IPCSource } from "module_builder/dist/IPCObjects";
+import { ModuleSettings } from "module_builder/dist/ModuleSettings";
+import { Setting } from "module_builder/dist/Setting";
+import { SettingBox, ChangeEvent } from "module_builder/dist/SettingBox";
+import { BooleanSetting } from "module_builder/dist/settings/types/BooleanSetting";
+import { StorageHandler } from "module_builder/dist/StorageHandler"
 
 export class SettingsProcess extends Process {
     public static readonly MODULE_NAME: string = "Settings";
