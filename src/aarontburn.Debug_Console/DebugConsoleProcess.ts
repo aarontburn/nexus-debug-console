@@ -3,7 +3,7 @@ import { CommandHandler } from "./CommandHandler";
 import { ICommand } from "./Commands";
 import { Process } from "module_builder/Process"
 import { IPCCallback, IPCSource } from "module_builder/IPCObjects";
-import { BooleanSetting } from "module_builder/settings/types/BooleanSetting";
+import { BooleanSetting } from "module_builder/settings/types";
 import { Setting } from "module_builder/Setting";
 
 
