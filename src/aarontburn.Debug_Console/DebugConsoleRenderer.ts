@@ -21,10 +21,9 @@
     const iframe: HTMLIFrameElement = document.getElementById('react-iframe') as HTMLIFrameElement;
 
     // Comment this out for export
-
-    // if (window.parent.common.args.includes("--dev")) {
-    //     iframe.src = "http://localhost:5173/"
-    // }
+    if (window.parent.common.args.includes("--dev")) {
+        iframe.src = "http://localhost:5173/"
+    }
 
     function sendToIFrame(eventType: string, data: any = []) {
         iframe.contentWindow.postMessage({ eventType: eventType, data: data }, "*");
