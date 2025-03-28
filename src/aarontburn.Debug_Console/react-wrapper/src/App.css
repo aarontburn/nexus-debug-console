@@ -1,0 +1,92 @@
+p {
+  padding: 0;
+  margin: 0;
+  font-size: medium;
+}
+
+
+#root {
+  width: 100%;
+  height: calc(100vh - 10px);
+}
+
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  margin: 0px 10px 0px 10px;
+}
+
+.box .row {
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+}
+
+.box .row.footer {
+  flex: 0 1 1em;
+}
+
+#message-header {
+  border: 1px dotted gray;
+  display: flex;
+}
+
+#message-header>p {
+  user-select: none;
+  cursor: default;
+
+}
+
+#clear-history-button {
+  color: gray;
+  transition: 200ms;
+
+}
+
+#clear-history-button:hover {
+  color: var(--accent-color);
+}
+
+.filter-type {
+  margin-right: 1em;
+  transition: 200ms;
+  color: gray;
+}
+
+#message-history {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+
+}
+
+#message-input-container {
+  border: 1px dotted gray;
+  display: flex;
+}
+
+
+
+#message-input {
+  width: calc(100% - 5px);
+  background-color: transparent;
+  font-family: Cascadia Mono, system-ui, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  border: none;
+  font-size: medium;
+
+}
+
+
+#message-input:focus {
+  border: none;
+  outline: none;
+}
