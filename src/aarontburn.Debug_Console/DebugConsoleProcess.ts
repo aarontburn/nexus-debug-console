@@ -169,13 +169,15 @@ export class DebugConsoleProcess extends Process {
         switch (eventType) {
             /**
              *  @see ICommand
+             *  If your module creates many of these, it may be best to create a type for correctness.
+             * 
              *  Expected input:
              *  {
-             *      prefix: string;
-             *      executeCommand: (args: string[]) => void;
+             *      prefix: string,
+             *      executeCommand: (args: string[]) => void,
              *      documentation?: {
-             *          shortDescription?: string[];
-             *          longDescription?: string;
+             *          shortDescription?: string[],
+             *          longDescription?: string,
              *      }
              *  }
              */
