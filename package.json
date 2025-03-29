@@ -1,7 +1,8 @@
 {
-  "name": "modules-quickstart-template",
+  "name": "modules-debug-console",
   "version": "1.0.0",
-  "description": "Developer template to create a module.",
+  "description": "A debug console, written in React, for modules.",
+  "author": "aarontburn",
   "config": {
     "react-wrapper-directory": "./src/aarontburn.Debug_Console/react-wrapper"
   },
@@ -25,7 +26,6 @@
     "electron-start": "npm run build && electron ./dist/main.js --dev"
 
   },
-  "author": "aarontburn",
   "devDependencies": {
     "@types/yauzl-promise": "^4.0.1",
     "electron": "^28.0.0",
