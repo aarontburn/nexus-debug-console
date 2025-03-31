@@ -1,7 +1,7 @@
 {
-  "name": "modules-debug-console",
+  "name": "nexus-debug-console",
   "version": "1.0.0",
-  "description": "A debug console, written in React, for modules.",
+  "description": "A debug console module for Nexus.",
   "author": "aarontburn",
   "config": {
     "react-wrapper-directory": "./src/aarontburn.Debug_Console/react-wrapper"
