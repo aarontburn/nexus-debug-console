@@ -1,10 +1,8 @@
 import * as path from "path";
 import { CommandHandler } from "./CommandHandler";
 import { ICommand } from "./Commands";
-import { Process } from "module_builder/Process"
-import { IPCCallback, IPCSource } from "module_builder/IPCObjects";
-import { BooleanSetting } from "module_builder/settings/types";
-import { Setting } from "module_builder/Setting";
+import { IPCCallback, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
+import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 
 
 export class DebugConsoleProcess extends Process {

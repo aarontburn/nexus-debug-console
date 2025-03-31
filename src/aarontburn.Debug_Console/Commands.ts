@@ -1,4 +1,4 @@
-import { StorageHandler } from "module_builder/StorageHandler";
+import { StorageHandler } from "@nexus/nexus-module-builder/StorageHandler";
 import { CommandHandler } from "./CommandHandler";
 import { helpFunction } from "./commands/Help";
 import { DebugConsoleProcess } from "./DebugConsoleProcess";
