@@ -181,6 +181,7 @@ export class DebugConsoleProcess extends Process {
              */
             case "addCommandPrefix": {
                 const command: unknown = data[0];
+
                 // Validate command:
                 if (this.isValidCommand(command)) {
                     this.commandHandler.addCommand({ ...command, source: source.getIPCSource() });
@@ -198,7 +199,8 @@ export class DebugConsoleProcess extends Process {
         return command &&
             typeof command === 'object' &&
             typeof command["executeCommand"] === "function" &&
-            typeof command["prefix"] === "string"
+            typeof command["prefix"] === "string" &&
+            command["prefix"].trim() !== '' 
     }
 
 

@@ -47,7 +47,7 @@ export function helpFunction(process: DebugConsoleProcess, commandHandler: Comma
             } else {
                 const out: string[] = [];
 
-                if (command.documentation === undefined) {
+                if (command.documentation === undefined || Object.keys(command.documentation).length === 0) {
                     out.push(`No documentation found for '${command.prefix}'`);
                 } else {
                     out.push(command.documentation.shortDescription.trim());

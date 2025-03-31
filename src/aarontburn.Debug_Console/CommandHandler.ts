@@ -80,7 +80,7 @@ export class CommandHandler {
         const prefix: string = command.split(" ")[0];
 
         if (this.prefixMap.has(prefix)) {
-            this.prefixMap.get(prefix).executeCommand(command.split(" "));
+            this.prefixMap.get(prefix).executeCommand(command.split(/\s+/));
         } else {
             console.error(`'${prefix}' is not recognized as a command.`);
         }
