@@ -15,7 +15,7 @@
     "vite:build": "cd %npm_package_config_react-wrapper-directory% && npm run build",
     "vite:start": "cd %npm_package_config_react-wrapper-directory% && npm run dev",
     "electron-start": "npm run build && electron ./node_modules/@nexus/nexus-client/main.js --dev",
-    "update-nexus": "npm update @nexus/nexus-exporter @nexus/nexus-module-builder @nexus/nexus-client"
+    "update-nexus": "npm update @nexus/nexus-exporter && npm update @nexus/nexus-module-builder && npm update @nexus/nexus-client"
   },
   "devDependencies": {
     "@nexus/nexus-client": "https://gitpkg.vercel.app/aarontburn/nexus-core/nexus/dist?main",

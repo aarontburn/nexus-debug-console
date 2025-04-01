@@ -1,8 +1,8 @@
+// This is auto-replaced during export. DO NOT MODIFY.
+const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
+// ---------------------------------------------------
+// ---------------------------------------------------
 
-/**
- *  The ID of the associated module. Must match the process.
- */
-const MODULE_ID: string = "aarontburn.Debug_Console";
 
 /**
  *  Sends information to the the process.

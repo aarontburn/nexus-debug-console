@@ -4,11 +4,11 @@ import { ICommand } from "./Commands";
 import { IPCCallback, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 
+const MODULE_NAME: string = "{EXPORTED_MODULE_NAME}";
+const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
 
 export default class DebugConsoleProcess extends Process {
 
-    private static readonly MODULE_NAME: string = "Debug Console";
-    private static readonly MODULE_ID: string = "aarontburn.Debug_Console";
     private static readonly HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
 
     private logMessages: string[] = [];
@@ -20,12 +20,10 @@ export default class DebugConsoleProcess extends Process {
      */
     public constructor(ipcCallback: IPCCallback) {
         super(
-            DebugConsoleProcess.MODULE_ID,
-            DebugConsoleProcess.MODULE_NAME,
+            MODULE_ID,
+            MODULE_NAME,
             DebugConsoleProcess.HTML_PATH,
             ipcCallback);
-
-        // Verify the module has been initialized. Can be removed.
 
 
         this.overrideLoggers();
