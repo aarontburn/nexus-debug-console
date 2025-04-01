@@ -9,7 +9,7 @@ export default class DebugConsoleProcess extends Process {
 
     private static readonly MODULE_NAME: string = "Debug Console";
     private static readonly MODULE_ID: string = "aarontburn.Debug_Console";
-    private static readonly HTML_PATH: string = path.join(__dirname, "./DebugConsoleHTML.html");
+    private static readonly HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
 
     private logMessages: string[] = [];
     private commandHandler: CommandHandler = new CommandHandler(this);

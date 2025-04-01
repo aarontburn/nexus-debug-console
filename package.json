@@ -4,7 +4,7 @@
   "description": "A debug console module for Nexus.",
   "author": "aarontburn",
   "config": {
-    "react-wrapper-directory": "./src/aarontburn.Debug_Console/react-wrapper"
+    "react-wrapper-directory": "./src/renderer/react-wrapper"
   },
   "scripts": {
     "preinstall": "cd %npm_package_config_react-wrapper-directory% && npm install",

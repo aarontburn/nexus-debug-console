@@ -1,5 +1,5 @@
 {
-    "module_name": "Debug Console",
+    "name": "Debug Console",
     "author": "aarontburn",
     "version": "1.0.0",
     "description": "A debug console.",

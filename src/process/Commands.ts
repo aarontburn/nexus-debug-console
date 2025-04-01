@@ -1,7 +1,7 @@
 import { StorageHandler } from "@nexus/nexus-module-builder/StorageHandler";
 import { CommandHandler } from "./CommandHandler";
 import { helpFunction } from "./commands/Help";
-import DebugConsoleProcess from "./DebugConsoleProcess";
+import DebugConsoleProcess from "./main";
 import { exec } from "child_process"
 
 export type CommandCallback = (args: string[]) => void;

@@ -1,5 +1,5 @@
 import { getCommandList, ICommand } from "./Commands";
-import DebugConsoleProcess from "./DebugConsoleProcess";
+import DebugConsoleProcess from "./main";
 
 export class CommandHandler {
     private prefixMap: Map<string, ICommand> = new Map();
