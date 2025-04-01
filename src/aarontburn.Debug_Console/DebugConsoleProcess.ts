@@ -5,7 +5,7 @@ import { IPCCallback, IPCSource, Process, Setting } from "@nexus/nexus-module-bu
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 
 
-export class DebugConsoleProcess extends Process {
+export default class DebugConsoleProcess extends Process {
 
     private static readonly MODULE_NAME: string = "Debug Console";
     private static readonly MODULE_ID: string = "aarontburn.Debug_Console";

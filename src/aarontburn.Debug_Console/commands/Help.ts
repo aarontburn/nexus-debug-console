@@ -1,6 +1,6 @@
 import { CommandHandler } from "../CommandHandler";
 import { ICommand } from "../Commands";
-import { DebugConsoleProcess } from "../DebugConsoleProcess";
+import DebugConsoleProcess from "../DebugConsoleProcess";
 
 
 const indent = (indentCount: number = 1) => ' '.repeat(2).repeat(indentCount);
