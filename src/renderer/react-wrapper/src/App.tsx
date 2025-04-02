@@ -43,17 +43,17 @@ function App() {
                 case "warn":
                 case "info":
                 case "error": {
-                    const formattedData: string = typeof data === "string" ? data : JSON.stringify(data);
+                    const formattedData: string = typeof data[0] === "string" ? data[0] : JSON.stringify(data[0]);
                     setLogHistory(prev => [...prev, { level: eventType, timeStamp: getCurrentTime(), message: formattedData }]);
                     break;
                 }
                 case "accent-color-changed": {
-                    const accentColor: string = data;
+                    const accentColor: string = data[0];
                     (document.querySelector(":root") as HTMLElement).style.setProperty("--accent-color", accentColor);
                     break;
                 }
                 case "settings": {
-                    setSettings(data);
+                    setSettings(data[0]);
                     break;
                 }
                 case "focus": {
@@ -66,7 +66,7 @@ function App() {
                 }
 
                 default: {
-                    console.log("Uncaught message: " + eventType + " | " + data)
+                    console.log("Uncaught message: " + eventType + " | " + data[0])
                     break;
                 }
             }

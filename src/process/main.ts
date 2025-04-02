@@ -141,7 +141,7 @@ export default class DebugConsoleProcess extends Process {
     }
 
 
-    public async handleEvent(eventType: string, data: any): Promise<any> {
+    public async handleEvent(eventType: string, data: any[]): Promise<any> {
         switch (eventType) {
             case "init": {
                 this.initialize();
@@ -157,7 +157,7 @@ export default class DebugConsoleProcess extends Process {
         }
     }
 
-    public async handleExternal(source: IPCSource, eventType: string, ...data: any[]): Promise<any> {
+    public async handleExternal(source: IPCSource, eventType: string, data: any[]): Promise<any> {
         switch (eventType) {
             /**
              *  @see ICommand
