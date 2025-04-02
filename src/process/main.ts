@@ -1,15 +1,16 @@
 import * as path from "path";
 import { CommandHandler } from "./CommandHandler";
 import { ICommand } from "./Commands";
-import { IPCCallback, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
+import { IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 
 const MODULE_NAME: string = "{EXPORTED_MODULE_NAME}";
 const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
+const HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
+
 
 export default class DebugConsoleProcess extends Process {
 
-    private static readonly HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
 
     private logMessages: string[] = [];
     private commandHandler: CommandHandler = new CommandHandler(this);
@@ -18,13 +19,8 @@ export default class DebugConsoleProcess extends Process {
      *  The constructor. Should not directly be called, 
      *      and should not contain logic relevant to the renderer.
      */
-    public constructor(ipcCallback: IPCCallback) {
-        super(
-            MODULE_ID,
-            MODULE_NAME,
-            DebugConsoleProcess.HTML_PATH,
-            ipcCallback);
-
+    public constructor() {
+        super(MODULE_ID, MODULE_NAME, HTML_PATH);
 
         this.overrideLoggers();
 
@@ -198,7 +194,7 @@ export default class DebugConsoleProcess extends Process {
             typeof command === 'object' &&
             typeof command["executeCommand"] === "function" &&
             typeof command["prefix"] === "string" &&
-            command["prefix"].trim() !== '' 
+            command["prefix"].trim() !== ''
     }
 
 
