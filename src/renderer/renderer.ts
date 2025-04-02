@@ -16,10 +16,11 @@ function sendToProcess(eventType: string, data: any = []): Promise<any> {
 
 const iframe: HTMLIFrameElement = document.getElementById('react-iframe') as HTMLIFrameElement;
 
-// Comment this out for export
-// if (window.parent.common.args.includes("--dev")) {
-//     iframe.src = "http://localhost:5173/"
-// }
+console.log(window.parent.common.args)
+if (window.parent.common.args.includes("--dev") && 
+    window.parent.common.args.includes(`--last_exported_id:${MODULE_ID}`.toLowerCase())) {
+    iframe.src = "http://localhost:5173/"
+}
 
 function sendToIFrame(eventType: string, data: any = []) {
     iframe.contentWindow.postMessage({ eventType: eventType, data: data }, "*");
