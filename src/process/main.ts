@@ -9,10 +9,18 @@ const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
 const HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
 
 
+const LOG_TYPES: readonly string[] = ["input", "log", "info", "warn", "error"] as const;
+interface Message {
+    level?: typeof LOG_TYPES[number],
+    timeStamp?: string,
+    message: string
+}
+
+
 export default class DebugConsoleProcess extends Process {
 
 
-    private logMessages: string[] = [];
+    private logMessages: Message[] = [];
     private commandHandler: CommandHandler = new CommandHandler(this);
 
     /**
@@ -21,9 +29,16 @@ export default class DebugConsoleProcess extends Process {
      */
     public constructor() {
         super(MODULE_ID, MODULE_NAME, HTML_PATH);
-
         this.overrideLoggers();
 
+    }
+
+    private getCurrentTime(): string {
+        const now: Date = new Date();
+        const hours: string = String(now.getHours()).padStart(2, '0');
+        const minutes: string = String(now.getMinutes()).padStart(2, '0');
+        const seconds: string = String(now.getSeconds()).padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
     }
 
     private overrideLoggers(): void {
@@ -49,54 +64,66 @@ export default class DebugConsoleProcess extends Process {
         // ---------------
 
         // Overwrite default stdout.write to check the identifier.
-        ((logArray: string[], rendererFunc: (eventType: string, ...data: any) => void) => {
+        ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite = process.stdout.write;
             process.stdout.write = function (chunk: string | Uint8Array, encoding?: BufferEncoding, callback?: (error?: Error | null) => void): boolean {
+                let level: string = "log";
                 let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
                 if (formattedMessage.startsWith("==log==")) {
                     formattedMessage = formattedMessage.substring("==log==".length + 1);
-                    rendererFunc("log", formattedMessage);
+                    level = "log";
 
                 } else if (formattedMessage.startsWith("==info==")) {
                     formattedMessage = formattedMessage.substring("==info==".length + 1);
-                    rendererFunc("info", formattedMessage);
+                    level = "info";
 
                 } else {
                     // Default to log
-                    rendererFunc("log", formattedMessage);
                 }
+                rendererFunc(level, formattedMessage);
 
-                logArray.push(formattedMessage);
+
+                logArray.push({
+                    message: formattedMessage,
+                    timeStamp: getCurrentTime(),
+                    level: level
+                });
 
                 return originalWrite.apply(process.stdout, [formattedMessage, encoding, callback]);
             } as typeof process.stdout.write;
 
-        })(this.logMessages, this.sendToRenderer.bind(this));
+        })(this.logMessages, this.getCurrentTime, this.sendToRenderer.bind(this));
 
         // Overwrite default stderr.write to check the identifier.
-        ((logArray: string[], rendererFunc: (eventType: string, ...data: any) => void) => {
+        ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite = process.stderr.write;
             process.stderr.write = function (chunk: any, encoding?: BufferEncoding, callback?: (error?: Error | null) => void): boolean {
+                let level: string = "error";
                 let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
                 if (formattedMessage.startsWith("==warn==")) {
                     formattedMessage = formattedMessage.substring("==warn==".length + 1);
-                    rendererFunc("warn", formattedMessage);
+                    level = "warn";
 
                 } else if (formattedMessage.startsWith("==error==")) {
                     formattedMessage = formattedMessage.substring("==error==".length + 1);
-                    rendererFunc("error", formattedMessage);
+                    level = "error";
 
                 } else {
                     // Default to error
-                    rendererFunc("error", formattedMessage);
                 }
 
-                logArray.push(formattedMessage);
+                rendererFunc(level, formattedMessage);
+
+                logArray.push({
+                    message: formattedMessage,
+                    level: level,
+                    timeStamp: getCurrentTime()
+                });
 
                 return originalWrite.apply(process.stdout, [formattedMessage, encoding, callback]);
             } as typeof process.stderr.write;
 
-        })(this.logMessages, this.sendToRenderer.bind(this));
+        })(this.logMessages, this.getCurrentTime, this.sendToRenderer.bind(this));
 
     }
 
@@ -106,6 +133,7 @@ export default class DebugConsoleProcess extends Process {
      */
     public initialize(): void {
         super.initialize(); // This should be called.
+        this.sendToRenderer("messages-before-init", this.logMessages);
         this.sendToRenderer("settings", {
             showTimeStamps: this.getSettings().getSetting("show_timestamps").getValue(),
             showLogLevels: this.getSettings().getSetting("show_log_levels").getValue()

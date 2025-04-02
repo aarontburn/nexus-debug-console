@@ -37,8 +37,12 @@ function App() {
 
 
     useEffect(() => {
-        const func = addProcessListener((eventType: string, data: any) => {
+        const func = addProcessListener((eventType: string, data: any[]) => {
             switch (eventType) {
+                case "messages-before-init": {
+                    setLogHistory(prev => [...prev, ...data[0]]);
+                    break;
+                }
                 case "log":
                 case "warn":
                 case "info":
@@ -64,6 +68,7 @@ function App() {
                     setLogHistory([]);
                     break;
                 }
+
 
                 default: {
                     console.log("Uncaught message: " + eventType + " | " + data[0])
