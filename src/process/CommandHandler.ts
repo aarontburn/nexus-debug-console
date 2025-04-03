@@ -70,7 +70,7 @@ export class CommandHandler {
                     fallbackList.push(`${conflict.prefix} -> ${conflict.source}.${conflict.prefix}`);
                 }
 
-                console.warn(`Could not execute command '${command.prefix}' due to conflicting command prefixes found.` + fallbackList.join("\n\t\t\t"));
+                console.warn(`Could not execute command '${command.prefix}' due to conflicting command prefixes found.` + fallbackList.join("\n\t\t\t") + "\n");
             }
             this.prefixMap.set(command.prefix, { source: "conflict", prefix: command.prefix, executeCommand: replacementFunction })
         }
@@ -82,7 +82,7 @@ export class CommandHandler {
         if (this.prefixMap.has(prefix)) {
             this.prefixMap.get(prefix).executeCommand(command.split(/\s+/));
         } else {
-            console.error(`'${prefix}' is not recognized as a command.`);
+            console.error(`'${prefix}' is not recognized as a command.\n`);
         }
 
 
