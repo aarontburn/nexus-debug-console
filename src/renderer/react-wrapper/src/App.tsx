@@ -33,7 +33,7 @@ function App() {
 
 
     const [historyIndex, setHistoryIndex] = useState(0);
-    const [settings, setSettings] = useState<ConsoleSettings>({ showLogLevels: true, showTimeStamps: true });
+    const [settings, setSettings] = useState<ConsoleSettings>({ showLogLevels: true, showTimeStamps: true, showModuleIDs: true });
 
 
     useEffect(() => {
@@ -48,7 +48,10 @@ function App() {
                 case "info":
                 case "error": {
                     const formattedData: string = typeof data[0] === "string" ? data[0] : JSON.stringify(data[0]);
-                    setLogHistory(prev => [...prev, { level: eventType, timeStamp: getCurrentTime(), message: formattedData }]);
+                    const moduleID: string = data[1];
+
+
+                    setLogHistory(prev => [...prev, { level: eventType, timeStamp: getCurrentTime(), message: formattedData, moduleID: moduleID }]);
                     break;
                 }
                 case "accent-color-changed": {

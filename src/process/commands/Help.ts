@@ -1,6 +1,6 @@
-import { CommandHandler } from "../../aarontburn.Debug_Console/CommandHandler";
-import { ICommand } from ".";
-import DebugConsoleProcess from "../../aarontburn.Debug_Console/DebugConsoleProcess";
+import { CommandHandler } from "../CommandHandler";
+import { ICommand } from "../Commands";
+import DebugConsoleProcess from "../main";
 
 
 const indent = (indentCount: number = 1) => ' '.repeat(2).repeat(indentCount);

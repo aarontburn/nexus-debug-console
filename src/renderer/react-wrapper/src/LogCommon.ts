@@ -12,9 +12,11 @@ export interface Message {
     level?: LogLevel,
     timeStamp?: string,
     message: string
+    moduleID?: string
 }
 
 export interface ConsoleSettings {
     showTimeStamps: boolean;
     showLogLevels: boolean;
+    showModuleIDs: boolean;
 }

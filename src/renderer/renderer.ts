@@ -6,7 +6,7 @@ const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
 
 
 
-window.parent.ipc.on(this.window, (_, eventType: string, data: any[]) => {
+window.parent.ipc.on(this.window, (eventType: string, data: any[]) => {
     handleEvent(eventType, data);
 });
 
