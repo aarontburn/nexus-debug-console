@@ -99,16 +99,6 @@ Usage: dir [path]
                     }
                 });
             }
-        },
-        {
-            source: "aarontburn.Debug_Console",
-            prefix: "trace",
-            executeCommand: function (args: string[]): void {
-                const fileStack: string[] = stackTrace().map(site => site.getFileName());
-                const splitTop: string[] = fileStack[0].split("\\");
-                const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
-            }
         }
-
     ]
 }
