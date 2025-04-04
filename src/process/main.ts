@@ -9,6 +9,7 @@ import stackTrace from "callsite";
 const MODULE_NAME: string = "{EXPORTED_MODULE_NAME}";
 const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
 const HTML_PATH: string = path.join(__dirname, "../renderer/index.html");
+const ICON_PATH: string = path.join(__dirname, "../assets/terminal.png");
 
 
 const LOG_TYPES: readonly string[] = ["input", "log", "info", "warn", "error"] as const;
@@ -30,7 +31,7 @@ export default class DebugConsoleProcess extends Process {
      *      and should not contain logic relevant to the renderer.
      */
     public constructor() {
-        super(MODULE_ID, MODULE_NAME, HTML_PATH);
+        super(MODULE_ID, MODULE_NAME, HTML_PATH, ICON_PATH);
         this.overrideLoggers();
 
     }
@@ -161,9 +162,9 @@ export default class DebugConsoleProcess extends Process {
 
     public refreshSettings(modifiedSetting: Setting<unknown>): void {
         this.sendToRenderer("settings", {
-            showTimeStamps: this.getSettings().getSetting("show_timestamps").getValue(),
-            showLogLevels: this.getSettings().getSetting("show_log_levels").getValue(),
-            showModuleIDs: this.getSettings().getSetting("show_module_ids").getValue()
+            showTimeStamps: this.getSettings().findSetting("show_timestamps").getValue(),
+            showLogLevels: this.getSettings().findSetting("show_log_levels").getValue(),
+            showModuleIDs: this.getSettings().findSetting("show_module_ids").getValue()
         })
 
     }
