@@ -1,7 +1,7 @@
 import * as path from "path";
 import { CommandHandler } from "./CommandHandler";
 import { ICommand } from "./Commands";
-import { IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
+import { DataResponse, HTTPStatusCode, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 import stackTrace from "callsite";
 
@@ -151,7 +151,7 @@ export default class DebugConsoleProcess extends Process {
                 .setName("Show Log Levels")
                 .setDefault(true)
                 .setAccessID("show_log_levels"),
-            
+
             new BooleanSetting(this)
                 .setName("Show Module IDs")
                 .setDefault(true)
@@ -186,7 +186,7 @@ export default class DebugConsoleProcess extends Process {
         }
     }
 
-    public async handleExternal(source: IPCSource, eventType: string, data: any[]): Promise<any> {
+    public async handleExternal(source: IPCSource, eventType: string, data: any[]): Promise<DataResponse> {
         switch (eventType) {
             /**
              *  @see ICommand
@@ -210,10 +210,19 @@ export default class DebugConsoleProcess extends Process {
                     this.commandHandler.addCommand({ ...command, source: source.getIPCSource() });
                 } else {
                     console.error(`Could not register command from ${source.getIPCSource()} with data: ${JSON.stringify(data)}`);
-                    return new Error(`Could not register command from ${source.getIPCSource()} with data: ${JSON.stringify(data)}`)
+                    return {
+                        body: `Could not register command from ${source.getIPCSource()} with data: ${JSON.stringify(data)}`,
+                        code: HTTPStatusCode.NOT_ACCEPTABLE
+                    }
+                }
+                return {
+                    body: `Successfully registered command.`,
+                    code: HTTPStatusCode.OK
                 }
 
-                break;
+            }
+            default: {
+                return { code: HTTPStatusCode.NOT_IMPLEMENTED, body: undefined };
             }
         }
     }

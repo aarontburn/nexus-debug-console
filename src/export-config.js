@@ -1,22 +1,14 @@
-
-
-
-
-/**
- * excluded: Any files/directories to not include in the final module.
- * included: Any files/directories to include in the final module.
- */
 module.exports = {
-    excluded: ["electron.ts", "./renderer/react-wrapper"],
+    excluded: ["./renderer/react-wrapper"],
     included: ["./renderer/react-wrapper/react_module"],
     build: {
         name: "Debug Console",
         id: "aarontburn.Debug_Console",
-        process: "./process/main",
+        process: "./process/main.js",
         replace: [
             {
                 from: "{EXPORTED_MODULE_ID}",
-                to: "%id%", // %arg% will take the arg from the build object
+                to: "%id%",
                 at: ["./process/main.ts", "./renderer/renderer.ts"]
             },
             {

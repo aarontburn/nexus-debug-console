@@ -16,8 +16,7 @@
     "dev_export": "npm run vite:build && node node_modules/@nexus/nexus-exporter/exporter.js --dev",
     "vite:build": "cd %npm_package_config_react-wrapper-directory% && npm run build",
     "vite:start": "cd %npm_package_config_react-wrapper-directory% && npm run dev",
-    "electron-start": "npm run build && electron ./node_modules/@nexus/nexus-client/main.js --dev",
-    "update-nexus": "npm run postinstall"
+    "electron-start": "npm run build && electron ./node_modules/@nexus/nexus-client/main.js --dev"
   },
   "devDependencies": {
     "@types/callsite": "^1.0.34",
