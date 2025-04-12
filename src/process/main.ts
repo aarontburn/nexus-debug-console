@@ -61,69 +61,131 @@ export default class DebugConsoleProcess extends Process {
         // Overwrite default stdout.write to check the identifier.
         ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite: typeof process.stdout.write = process.stdout.write.bind(process.stdout);
-            process.stdout.write = function (chunk: string | Uint8Array, callback?: (error?: Error | null) => void): boolean {
-                let level: string = "log";
-                let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
 
-                if (formattedMessage.startsWith("==info==")) {
-                    formattedMessage = formattedMessage.substring("==info==".length + 1);
-                    level = "info";
+            const getTrace = () => {
+                try {
+                    const fileStack: string[] = stackTrace().map(site => site.getFileName());
+                    const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
 
-                } else {
-                    // Default to log
+                    const moduleIDIndex = splitTop.indexOf("built");
+                    const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
+                    return { moduleID, moduleIDIndex }
+                } catch (err) {
+                    return undefined
                 }
+            }
+            process.stdout.write = function (chunk: string | Uint8Array, callback?: (error?: Error | null) => void): boolean {
+                try {
+                    let level: string = "log";
+                    let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
 
-                const fileStack: string[] = stackTrace().map(site => site.getFileName());
-                const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
+                    if (formattedMessage.startsWith("==info==")) {
+                        formattedMessage = formattedMessage.substring("==info==".length + 1);
+                        level = "info";
 
-                const moduleIDIndex = splitTop.indexOf("built");
-                const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
-                rendererFunc(level, formattedMessage, moduleIDIndex === -1 ? undefined : moduleID);
+                    } else {
+                        // Default to log
+                    }
 
-                logArray.push({
-                    message: formattedMessage,
-                    timeStamp: getCurrentTime(),
-                    level: level
-                });
-                return originalWrite(formattedMessage, callback);
+                    const trace = getTrace();
+                    if (trace === undefined) {
+                        rendererFunc(level, formattedMessage, undefined);
+                    } else {
+                        rendererFunc(level, formattedMessage, trace.moduleIDIndex === -1 ? undefined : trace.moduleID);
+                    }
+
+                    logArray.push({
+                        message: formattedMessage,
+                        timeStamp: getCurrentTime(),
+                        level: level
+                    });
+                    return originalWrite(formattedMessage, callback);
+                } catch (err) {
+
+                    if (err instanceof Error) {
+                        logArray.push({
+                            message: err.stack,
+                            timeStamp: getCurrentTime(),
+                            level: "error"
+                        });
+                    }
+
+                }
+                return originalWrite(chunk, callback);
+
             } as typeof process.stdout.write;
 
-        })(this.logMessages, this.getCurrentTime, this.sendToRenderer.bind(this));
+        })(this.logMessages, this.getCurrentTime, ((eventType: string, ...data: any) => {
+            if (this.isInitialized()) {
+                this.sendToRenderer(eventType, ...data)
+            }
+        }).bind(this));
 
         // Overwrite default stderr.write to check the identifier.
         ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite: typeof process.stderr.write = process.stderr.write.bind(process.stderr);
-            process.stderr.write = function (chunk: any, callback?: (error?: Error | null) => void): boolean {
-                let level: string = "error";
-                let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
 
-                if (formattedMessage.startsWith("==warn==")) {
-                    formattedMessage = formattedMessage.substring("==warn==".length + 1);
-                    level = "warn";
+            const getTrace = () => {
+                try {
+                    const fileStack: string[] = stackTrace().map(site => site.getFileName());
+                    const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
 
-                } else {
-                    // Default to error
+                    const moduleIDIndex = splitTop.indexOf("built");
+                    const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
+                    return { moduleID, moduleIDIndex }
+                } catch (err) {
+                    return undefined
                 }
+            }
 
-                const fileStack: string[] = stackTrace().map(site => site.getFileName());
-                const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
+            process.stderr.write = function (chunk: any, callback?: (error?: Error | null) => void): boolean {
+                try {
+                    let level: string = "error";
+                    let formattedMessage: string = typeof chunk === "string" ? chunk : chunk.toString();
 
-                const moduleIDIndex = splitTop.indexOf("built");
-                const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
-                rendererFunc(level, formattedMessage, moduleIDIndex === -1 ? undefined : moduleID);
+                    if (formattedMessage.startsWith("==warn==")) {
+                        formattedMessage = formattedMessage.substring("==warn==".length + 1);
+                        level = "warn";
 
-                logArray.push({
-                    message: formattedMessage,
-                    level: level,
-                    timeStamp: getCurrentTime()
-                });
+                    } else {
+                        // Default to error
+                    }
 
-                return originalWrite(formattedMessage, callback);
+                    const trace = getTrace();
+                    if (trace === undefined) {
+                        rendererFunc(level, formattedMessage, undefined);
+                    } else {
+                        rendererFunc(level, formattedMessage, trace.moduleIDIndex === -1 ? undefined : trace.moduleID);
+                    }
+
+                    logArray.push({
+                        message: formattedMessage,
+                        level: level,
+                        timeStamp: getCurrentTime()
+                    });
+                    return originalWrite(formattedMessage, callback);
+                } catch (err) {
+
+                    if (err instanceof Error) {
+                        logArray.push({
+                            message: err.stack,
+                            timeStamp: getCurrentTime(),
+                            level: "error"
+                        });
+                    }
+                }
+                return originalWrite(chunk, callback);
+
             } as typeof process.stderr.write;
 
-        })(this.logMessages, this.getCurrentTime, this.sendToRenderer.bind(this));
+        })(this.logMessages, this.getCurrentTime, ((eventType: string, ...data: any) => {
+            if (this.isInitialized()) {
+                this.sendToRenderer(eventType, ...data)
+            }
+        }).bind(this));
 
     }
+
 
     /**
      *  The entry point of the module. Will be called once the 
