@@ -39,16 +39,10 @@ export const MessageComponent = ({ message, settings }: MessageProps) => {
         return <>{`[${message.timeStamp}] `}</>
     }
 
-    const ModuleIDElement = (): JSX.Element => {
-        if (!settings.showModuleIDs || message.moduleID === undefined) {
-            return <></>
-        }
-        return <>{`[${message.moduleID}] `}</>
-    }
 
 
     return <>
-        <p style={{ whiteSpace: "pre-wrap" }}>{<TimestampElement />}{<ModuleIDElement />}{<LogLevelElement />}{<MessageElement />}</p>
+        <p style={{ whiteSpace: "pre-wrap" }}>{<TimestampElement />}{<LogLevelElement />}{<MessageElement />}</p>
     </>
 }
 

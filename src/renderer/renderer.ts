@@ -6,7 +6,7 @@ const MODULE_ID: string = "{EXPORTED_MODULE_ID}";
 
 
 
-window.parent.ipc.on(this.window, (eventType: string, data: any[]) => {
+window.ipc.on(this.window, (eventType: string, data: any[]) => {
     handleEvent(eventType, data);
 });
 
@@ -17,14 +17,13 @@ window.parent.ipc.on(this.window, (eventType: string, data: any[]) => {
  *  @param data         Any data to send.
  */
 const sendToProcess = (eventType: string, ...data: any): Promise<any> => {
-    return window.parent.ipc.send(this.window, eventType, data);
+    return window.ipc.send(this.window, eventType, data);
 }
 
 const iframe: HTMLIFrameElement = document.getElementById('react-iframe') as HTMLIFrameElement;
 
-console.log(window.parent.common.args)
-if (window.parent.common.args.includes("--dev") &&
-    window.parent.common.args.includes(`--last_exported_id:${MODULE_ID}`.toLowerCase())) {
+if (window.common.args.includes("--dev") &&
+    window.common.args.includes(`--last_exported_id:${MODULE_ID}`.toLowerCase())) {
     iframe.src = "http://localhost:5173/"
 } else {
     iframe.src = "../react_module/index.html"

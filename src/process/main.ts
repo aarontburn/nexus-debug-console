@@ -1,6 +1,6 @@
 import * as path from "path";
-import { CommandHandler } from "./CommandHandler";
-import { ICommand } from "./Commands";
+import { CommandHandler } from "./command-handler";
+import { ICommand } from "./commands/all-commands";
 import { DataResponse, HTTPStatusCode, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
 import stackTrace from "callsite";
@@ -31,7 +31,14 @@ export default class DebugConsoleProcess extends Process {
      *      and should not contain logic relevant to the renderer.
      */
     public constructor() {
-        super(MODULE_ID, MODULE_NAME, HTML_PATH, ICON_PATH);
+        super({
+            moduleID: MODULE_ID,
+            moduleName: MODULE_NAME,
+            paths: {
+                htmlPath: HTML_PATH,
+                iconPath: ICON_PATH
+            }
+        });
         this.overrideLoggers();
 
     }
@@ -62,18 +69,7 @@ export default class DebugConsoleProcess extends Process {
         ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite: typeof process.stdout.write = process.stdout.write.bind(process.stdout);
 
-            const getTrace = () => {
-                try {
-                    const fileStack: string[] = stackTrace().map(site => site.getFileName());
-                    const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
 
-                    const moduleIDIndex = splitTop.indexOf("built");
-                    const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
-                    return { moduleID, moduleIDIndex }
-                } catch (err) {
-                    return undefined
-                }
-            }
             process.stdout.write = function (chunk: string | Uint8Array, callback?: (error?: Error | null) => void): boolean {
                 try {
                     let level: string = "log";
@@ -87,12 +83,7 @@ export default class DebugConsoleProcess extends Process {
                         // Default to log
                     }
 
-                    const trace = getTrace();
-                    if (trace === undefined) {
-                        rendererFunc(level, formattedMessage, undefined);
-                    } else {
-                        rendererFunc(level, formattedMessage, trace.moduleIDIndex === -1 ? undefined : trace.moduleID);
-                    }
+                    rendererFunc(level, formattedMessage, undefined);
 
                     logArray.push({
                         message: formattedMessage,
@@ -125,18 +116,6 @@ export default class DebugConsoleProcess extends Process {
         ((logArray: Message[], getCurrentTime: () => string, rendererFunc: (eventType: string, ...data: any) => void) => {
             const originalWrite: typeof process.stderr.write = process.stderr.write.bind(process.stderr);
 
-            const getTrace = () => {
-                try {
-                    const fileStack: string[] = stackTrace().map(site => site.getFileName());
-                    const splitTop: string[] = fileStack[4].split("\\"); // 4 might not work all the time?
-
-                    const moduleIDIndex = splitTop.indexOf("built");
-                    const moduleID: string = splitTop[splitTop.indexOf("built") + 1];
-                    return { moduleID, moduleIDIndex }
-                } catch (err) {
-                    return undefined
-                }
-            }
 
             process.stderr.write = function (chunk: any, callback?: (error?: Error | null) => void): boolean {
                 try {
@@ -151,12 +130,7 @@ export default class DebugConsoleProcess extends Process {
                         // Default to error
                     }
 
-                    const trace = getTrace();
-                    if (trace === undefined) {
-                        rendererFunc(level, formattedMessage, undefined);
-                    } else {
-                        rendererFunc(level, formattedMessage, trace.moduleIDIndex === -1 ? undefined : trace.moduleID);
-                    }
+                    rendererFunc(level, formattedMessage, undefined);
 
                     logArray.push({
                         message: formattedMessage,
@@ -213,11 +187,6 @@ export default class DebugConsoleProcess extends Process {
                 .setName("Show Log Levels")
                 .setDefault(true)
                 .setAccessID("show_log_levels"),
-
-            new BooleanSetting(this)
-                .setName("Show Module IDs")
-                .setDefault(true)
-                .setAccessID("show_module_ids"),
         ]
     }
 
@@ -226,7 +195,6 @@ export default class DebugConsoleProcess extends Process {
         this.sendToRenderer("settings", {
             showTimeStamps: this.getSettings().findSetting("show_timestamps").getValue(),
             showLogLevels: this.getSettings().findSetting("show_log_levels").getValue(),
-            showModuleIDs: this.getSettings().findSetting("show_module_ids").getValue()
         })
 
     }

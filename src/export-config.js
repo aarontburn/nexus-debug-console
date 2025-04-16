@@ -1,5 +1,5 @@
 module.exports = {
-    excluded: ["./renderer/react-wrapper"],
+    excluded: ["electron.ts", "./renderer/react-wrapper"],
     included: ["./renderer/react-wrapper/react_module"],
     build: {
         name: "Debug Console",

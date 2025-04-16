@@ -1,5 +1,5 @@
-import { CommandHandler } from "../CommandHandler";
-import { ICommand } from "../Commands";
+import { CommandHandler } from "../command-handler";
+import { ICommand } from "./all-commands";
 import DebugConsoleProcess from "../main";
 
 

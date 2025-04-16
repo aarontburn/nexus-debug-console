@@ -1,4 +1,4 @@
-import { getCommandList, ICommand } from "./Commands";
+import { getCommandList, ICommand } from "./commands/all-commands";
 import DebugConsoleProcess from "./main";
 
 export class CommandHandler {
@@ -48,7 +48,7 @@ export class CommandHandler {
 
 
 
-        // Add fallback command (e.g. built_ins.Settings.help)
+        // Add fallback command (e.g. nexus.Settings.help)
         this.prefixMap.set(command.source + "." + command.prefix, command);
 
         if (!this.prefixMap.has(command.prefix)) {

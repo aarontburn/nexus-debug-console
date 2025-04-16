@@ -33,7 +33,7 @@ function App() {
 
 
     const [historyIndex, setHistoryIndex] = useState(0);
-    const [settings, setSettings] = useState<ConsoleSettings>({ showLogLevels: true, showTimeStamps: true, showModuleIDs: true });
+    const [settings, setSettings] = useState<ConsoleSettings>({ showLogLevels: true, showTimeStamps: true });
 
 
     useEffect(() => {
@@ -125,6 +125,7 @@ function App() {
             <div className="row footer" id='message-input-container'>
                 <p style={{ marginRight: "0.5em", marginLeft: "0.5em" }}>{">>"}</p>
                 <input id='message-input'
+                    spellCheck="false"
                     ref={inputRef}
                     type='text'
                     value={inputValue}
