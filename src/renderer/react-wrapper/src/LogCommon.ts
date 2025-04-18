@@ -4,7 +4,7 @@ export const logColors: { [level: string]: string } = {
     "input": "turquoise",
     "log": "gray",
     "info": "green",
-    "warn": "yellow",
+    "warn": "#d1d100",
     "error": "red",
 } as const;
 

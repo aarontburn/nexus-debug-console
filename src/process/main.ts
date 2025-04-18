@@ -165,16 +165,15 @@ export default class DebugConsoleProcess extends Process {
      *  The entry point of the module. Will be called once the 
      *      renderer sends the 'init' signal.
      */
-    public initialize(): void {
+    public async initialize(): Promise<void> {
         super.initialize(); // This should be called.
         this.sendToRenderer("messages-before-init", this.logMessages);
-        this.refreshSettings(undefined)
+        this.onSettingModified(undefined)
     }
 
-    public onGUIShown(): void {
+    public async onGUIShown(): Promise<void> {
         this.sendToRenderer("focus");
     }
-
 
     public registerSettings(): (Setting<unknown> | string)[] {
         return [
@@ -191,7 +190,7 @@ export default class DebugConsoleProcess extends Process {
     }
 
 
-    public refreshSettings(modifiedSetting: Setting<unknown>): void {
+    public async onSettingModified(modifiedSetting: Setting<unknown>): Promise<void> {
         this.sendToRenderer("settings", {
             showTimeStamps: this.getSettings().findSetting("show_timestamps").getValue(),
             showLogLevels: this.getSettings().findSetting("show_log_levels").getValue(),
