@@ -1,9 +1,9 @@
-import { StorageHandler } from "@nexus/nexus-module-builder/StorageHandler";
 import { CommandHandler } from "../command-handler";
 import DebugConsoleProcess from "../main";
 import { exec } from "child_process"
-import { DataResponse, HTTPStatusCode } from "@nexus/nexus-module-builder";
-import { helpFunction } from "./help";
+import { DataResponse, DIRECTORIES, HTTPStatusCodes } from "@nexus/nexus-module-builder";
+import { helpFunction } from "./Help";
+import * as os from "os";
 
 export type CommandCallback = (args: string[]) => void;
 
@@ -90,33 +90,7 @@ Usage: dir [path]
             executeCommand: function (args: string[]): void {
                 let path: string = args.slice(1).join(' ');
                 if (path === '') {
-                    path = StorageHandler.PATH
-                }
-                console.info(`Opening directory '${path}'`);
-                exec(`start "" "${path}"`, (err, stdout, stderr) => {
-                    if (err) {
-                        console.error(`Could not open directory: ${err}`);
-                    }
-                });
-            }
-        },
-        {
-            source: "aarontburn.Debug_Console",
-            prefix: "dir",
-            documentation: {
-                shortDescription: "Opens a directory.",
-                longDescription: `
-Usage: dir [path]
-
-        - Opens a directory. If 'path' isn't provided, opens the storage for the application.
-        
-        Example: Navigating to the 'Program Files' directory
-        >> dir C:\\Program Files`
-            },
-            executeCommand: function (args: string[]): void {
-                let path: string = args.slice(1).join(' ');
-                if (path === '') {
-                    path = StorageHandler.PATH
+                    path = DIRECTORIES.ROOT
                 }
                 console.info(`Opening directory '${path}'`);
                 exec(`start "" "${path}"`, (err, stdout, stderr) => {
@@ -147,7 +121,7 @@ Usage: dir [path]
 
                 debugProcess.requestExternal("nexus.Main", "open-dev-tools", moduleID, mode?.slice(2))
                     .then((response: DataResponse) => {
-                        if (response.code === HTTPStatusCode.OK) {
+                        if (response.code === HTTPStatusCodes.OK) {
                             console.info(response.body + "\n");
                         } else {
                             console.error(response.body + "\n");
@@ -191,7 +165,7 @@ Usage: devtools <moduleID> [--detached | --left | --right | --bottom | --undocke
 
                 debugProcess.requestExternal("nexus.Main", "reload", moduleID, args[2])
                     .then((response: DataResponse) => {
-                        if (response.code === HTTPStatusCode.OK) {
+                        if (response.code === HTTPStatusCodes.OK) {
                             console.info(response.body + "\n");
                         } else {
                             console.error(response.body + "\n");

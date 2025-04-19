@@ -1,9 +1,8 @@
 import * as path from "path";
 import { CommandHandler } from "./command-handler";
 import { ICommand } from "./commands/all-commands";
-import { DataResponse, HTTPStatusCode, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
+import { DataResponse, HTTPStatusCodes, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
 import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
-import stackTrace from "callsite";
 
 
 const MODULE_NAME: string = "{EXPORTED_MODULE_NAME}";
@@ -241,17 +240,17 @@ export default class DebugConsoleProcess extends Process {
                     console.error(`Could not register command from ${source.getIPCSource()} with data: ${JSON.stringify(data)}`);
                     return {
                         body: `Could not register command from ${source.getIPCSource()} with data: ${JSON.stringify(data)}`,
-                        code: HTTPStatusCode.NOT_ACCEPTABLE
+                        code: HTTPStatusCodes.NOT_ACCEPTABLE
                     }
                 }
                 return {
                     body: `Successfully registered command.`,
-                    code: HTTPStatusCode.OK
+                    code: HTTPStatusCodes.OK
                 }
 
             }
             default: {
-                return { code: HTTPStatusCode.NOT_IMPLEMENTED, body: undefined };
+                return { code: HTTPStatusCodes.NOT_IMPLEMENTED, body: undefined };
             }
         }
     }
