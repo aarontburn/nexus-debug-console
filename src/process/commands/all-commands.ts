@@ -2,7 +2,7 @@ import { CommandHandler } from "../command-handler";
 import DebugConsoleProcess from "../main";
 import { exec } from "child_process"
 import { DataResponse, DIRECTORIES, HTTPStatusCodes } from "@nexus/nexus-module-builder";
-import { helpFunction } from "./Help";
+import { helpFunction } from "./help";
 import * as os from "os";
 
 export type CommandCallback = (args: string[]) => void;
@@ -119,7 +119,7 @@ Usage: dir [path]
                     return;
                 }
 
-                debugProcess.requestExternal("nexus.Main", "open-dev-tools", moduleID, mode?.slice(2))
+                debugProcess.requestExternal("nexus.Main", "open-dev-tools", mode?.slice(2), moduleID)
                     .then((response: DataResponse) => {
                         if (response.code === HTTPStatusCodes.OK) {
                             console.info(response.body + "\n");
