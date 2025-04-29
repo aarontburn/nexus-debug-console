@@ -1,7 +1,7 @@
 import { CommandHandler } from "../command-handler";
 import DebugConsoleProcess from "../main";
 import { exec } from "child_process"
-import { DataResponse, DIRECTORIES, HTTPStatusCodes } from "@nexus/nexus-module-builder";
+import { DataResponse, DIRECTORIES, HTTPStatusCodes } from "@nexus-app/nexus-module-builder";
 import { helpFunction } from "./help";
 import * as os from "os";
 

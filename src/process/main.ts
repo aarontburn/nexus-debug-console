@@ -1,8 +1,8 @@
 import * as path from "path";
 import { CommandHandler } from "./command-handler";
 import { ICommand } from "./commands/all-commands";
-import { DataResponse, HTTPStatusCodes, IPCSource, Process, Setting } from "@nexus/nexus-module-builder"
-import { BooleanSetting } from "@nexus/nexus-module-builder/settings/types";
+import { DataResponse, HTTPStatusCodes, IPCSource, Process, Setting } from "@nexus-app/nexus-module-builder"
+import { BooleanSetting } from "@nexus-app/nexus-module-builder/settings/types";
 
 
 const MODULE_NAME: string = "{EXPORTED_MODULE_NAME}";
