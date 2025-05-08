@@ -1,12 +1,9 @@
 {
-  "name": "nexus-debug-console",
-  "version": "1.0.0",
-  "description": "A debug console module for Nexus.",
-  "author": "aarontburn",
   "config": {
     "react-wrapper-directory": "./src/renderer/react-wrapper"
   },
   "scripts": {
+    "postinstall": "npm install @nexus-app/nexus-client@latest",
     "preinstall": "cd %npm_package_config_react-wrapper-directory% && npm install",
     "build": "npm run dev_export",
     "start": "npm-run-all --parallel vite:start electron-start",
@@ -17,7 +14,7 @@
     "electron-start": "npm run dev_export && cd ./node_modules/@nexus-app/nexus-client/ && npm start"
   },
   "devDependencies": {
-    "@nexus-app/nexus-client": "^0.0.1",
+    "@nexus-app/nexus-client": "^0.0.5",
     "@types/callsite": "^1.0.34",
     "@types/yauzl-promise": "^4.0.1",
     "electron": "^35.1.5",

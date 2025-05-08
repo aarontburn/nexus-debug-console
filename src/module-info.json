@@ -1,9 +1,27 @@
 {
-    "name": "{EXPORTED_MODULE_NAME}",
-    "author": "aarontburn",
+    "name": "Debug Console",
+    "id": "aarontburn.Debug_Console",
     "version": "1.0.0",
-    "description": "A debug console.",
-    "build_version": 257,
+    "author": "aarontburn",
+    "description": "A debug console for Nexus.",
+    "link": "https://github.com/aarontburn/nexus-debug-console",
     "platforms": [],
-    "link": "https://github.com/aarontburn/nexus-debug-console"
+    "build": {
+        "build-version": 1,
+        "excluded": ["electron.ts", "./renderer/react-wrapper"],
+        "included": ["./renderer/react-wrapper/react_module"],
+        "process": "./process/main.js",
+        "replace": [
+            {
+                "from": "{EXPORTED_MODULE_ID}",
+                "to": "%id%",
+                "at": ["./process/main.ts", "./renderer/renderer.ts"]
+            },
+            {
+                "from": "{EXPORTED_MODULE_NAME}",
+                "to": "%name%",
+                "at": ["./process/main.ts"]
+            }
+        ]
+    }
 }
