@@ -5,22 +5,36 @@
     "author": "aarontburn",
     "description": "A debug console for Nexus.",
     "link": "https://github.com/aarontburn/nexus-debug-console",
+    "git-latest": {
+        "git-repo-name": "nexus-debug-console",
+        "git-username": "aarontburn"
+    },
     "platforms": [],
     "build": {
-        "build-version": 1,
-        "excluded": ["electron.ts", "./renderer/react-wrapper"],
-        "included": ["./renderer/react-wrapper/react_module"],
+        "build-version": 4,
+        "excluded": [
+            "electron.ts",
+            "./renderer/react-wrapper"
+        ],
+        "included": [
+            "./renderer/react-wrapper/react_module"
+        ],
         "process": "./process/main.js",
         "replace": [
             {
                 "from": "{EXPORTED_MODULE_ID}",
                 "to": "%id%",
-                "at": ["./process/main.ts", "./renderer/renderer.ts"]
+                "at": [
+                    "./process/main.ts",
+                    "./renderer/renderer.ts"
+                ]
             },
             {
                 "from": "{EXPORTED_MODULE_NAME}",
                 "to": "%name%",
-                "at": ["./process/main.ts"]
+                "at": [
+                    "./process/main.ts"
+                ]
             }
         ]
     }
