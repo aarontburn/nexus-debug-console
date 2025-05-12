@@ -1,5 +1,10 @@
+@font-face {
+  font-family: Cascadia;
+  src: url(./CascadiaMono-Regular.ttf);
+}
+
 :root {
-  font-family: Cascadia Mono, system-ui, Helvetica, Arial, sans-serif;
+  font-family: Cascadia, Cascadia Mono, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
