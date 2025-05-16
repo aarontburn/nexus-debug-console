@@ -3,7 +3,6 @@ import DebugConsoleProcess from "../main";
 import { exec } from "child_process"
 import { DataResponse, DIRECTORIES, HTTPStatusCodes } from "@nexus-app/nexus-module-builder";
 import { helpFunction } from "./help";
-import * as os from "os";
 
 export type CommandCallback = (args: string[]) => void;
 
@@ -17,11 +16,12 @@ export interface ICommand {
     };
 }
 
-export const getCommandList = (debugProcess: DebugConsoleProcess, commandHandler: CommandHandler): ICommand[] => {
+export type LocalCommand = Omit<ICommand, "source">;
+
+export const getCommandList = (debugProcess: DebugConsoleProcess, commandHandler: CommandHandler): LocalCommand[] => {
 
     return [
         {
-            source: "aarontburn.Debug_Console",
             prefix: "help",
             documentation: {
                 shortDescription: "Displays all commands, or information about a single command.",
@@ -41,7 +41,6 @@ Usage: help [moduleID / command]
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "?",
             documentation: {
                 shortDescription: "Displays all commands, or information about a single command.",
@@ -61,7 +60,6 @@ Usage: ? [moduleID / command]
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "clear",
             documentation: {
                 shortDescription: "Clears the console. Not reversible.",
@@ -75,7 +73,6 @@ Usage: clear
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "dir",
             documentation: {
                 shortDescription: "Opens a directory.",
@@ -101,7 +98,6 @@ Usage: dir [path]
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "devtools",
             executeCommand: function (args: string[]): void {
                 const possibleModes: string[] = ['--left', '--right', '--bottom', '--detach'];
@@ -143,7 +139,6 @@ Usage: devtools <moduleID> [--detached | --left | --right | --bottom | --undocke
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "argv",
             executeCommand: function (args: string[]): void {
                 console.info(JSON.stringify(process.argv, undefined, 4) + "\n");
@@ -153,7 +148,6 @@ Usage: devtools <moduleID> [--detached | --left | --right | --bottom | --undocke
             }
         },
         {
-            source: "aarontburn.Debug_Console",
             prefix: "reload",
             executeCommand: function (args: string[]): void {
                 const moduleID: string = args[1];

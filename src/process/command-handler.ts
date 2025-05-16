@@ -1,4 +1,4 @@
-import { getCommandList, ICommand } from "./commands/all-commands";
+import { getCommandList, ICommand, LocalCommand } from "./commands/all-commands";
 import DebugConsoleProcess from "./main";
 
 export class CommandHandler {
@@ -27,7 +27,7 @@ export class CommandHandler {
     }
 
     private registerDefaultCommands(): void {
-        const defaultCommands: ICommand[] = getCommandList(this.debugProcess, this);
+        const defaultCommands: LocalCommand[] = getCommandList(this.debugProcess, this);
         for (const command of defaultCommands) {
             this.addCommand({ ...command, source: "aarontburn.Debug_Console" });
         }

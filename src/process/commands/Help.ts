@@ -1,9 +1,32 @@
 import { CommandHandler } from "../command-handler";
-import { ICommand } from "./all-commands";
+import { ICommand, LocalCommand } from "./all-commands";
 import DebugConsoleProcess from "../main";
 
 
 const indent = (indentCount: number = 1) => ' '.repeat(2).repeat(indentCount);
+
+export function helpCommand(moduleProcess: DebugConsoleProcess): LocalCommand {
+    return {
+        prefix: "help",
+        documentation: {
+            shortDescription: "Displays all commands, or information about a single command.",
+            longDescription: `
+Usage: help [moduleID / command]
+
+        - Synonymous for '?'
+        - When used without any arguments, this command will display all registered commands
+        - To get information about a specific command, type (without brackets) 'help [command]'
+        - To get all commands from a specific module, type (without brackets) 'help [moduleID]'
+
+        Example: Get information about the 'clear' command.
+        >> help clear`
+        },
+        executeCommand: function (args: string[]): void {
+            helpFunction(moduleProcess, commandHandler, args);
+        }
+    }
+}
+
 
 
 export function helpFunction(process: DebugConsoleProcess, commandHandler: CommandHandler, args: string[]) {
