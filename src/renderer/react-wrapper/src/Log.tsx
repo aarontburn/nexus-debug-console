@@ -42,7 +42,7 @@ export const MessageComponent = ({ message, settings }: MessageProps) => {
 
 
     return <>
-        <p style={{ whiteSpace: "pre-wrap" }}>{<TimestampElement />}{<LogLevelElement />}{<MessageElement />}</p>
+        <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>{<TimestampElement />}{<LogLevelElement />}{<MessageElement />}</p>
     </>
 }
 

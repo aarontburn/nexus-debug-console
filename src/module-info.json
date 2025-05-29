@@ -1,8 +1,9 @@
 {
     "name": "Debug Console",
     "id": "aarontburn.Debug_Console",
-    "version": "1.0.5",
+    "version": "1.0.8",
     "author": "aarontburn",
+    "author-id": "683193056e5989838dcf772c",
     "description": "A debug console for Nexus.",
     "link": "https://github.com/aarontburn/nexus-debug-console",
     "git-latest": {
@@ -11,7 +12,7 @@
     },
     "platforms": [],
     "build": {
-        "build-version": 7,
+        "build-version": 12,
         "excluded": [
             "electron.ts",
             "./renderer/react-wrapper"
