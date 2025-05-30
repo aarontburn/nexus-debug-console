@@ -14,7 +14,7 @@
     "electron-start": "npm run dev_export && cd ./node_modules/@nexus-app/nexus-client/ && npm start"
   },
   "devDependencies": {
-    "@nexus-app/nexus-client": "^0.0.7",
+    "@nexus-app/nexus-client": "^0.0.10",
     "@types/callsite": "^1.0.34",
     "@types/yauzl-promise": "^4.0.1",
     "electron": "^35.1.5",
