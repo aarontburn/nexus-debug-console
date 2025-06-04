@@ -1,5 +1,6 @@
 import { getCommandList, ICommand, LocalCommand } from "./commands/all-commands";
 import DebugConsoleProcess from "./main";
+import stringArgv from 'string-argv';
 
 export class CommandHandler {
     private prefixMap: Map<string, ICommand> = new Map();
@@ -77,15 +78,13 @@ export class CommandHandler {
     }
 
     public executeCommand(command: string) {
-        const prefix: string = command.split(" ")[0];
+        const prefix: string = stringArgv(command)[0];
 
         if (this.prefixMap.has(prefix)) {
-            this.prefixMap.get(prefix).executeCommand(command.split(/\s+/));
+            this.prefixMap.get(prefix).executeCommand(stringArgv(command));
         } else {
             console.error(`'${prefix}' is not recognized as a command.\n`);
         }
-
-
     }
 
 
